@@ -1,7 +1,9 @@
-package com.jay.battlecity;
+package com.jay.battlecity.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.jay.battlecity.R;
 
 public class MainActivity extends AppCompatActivity {
 
