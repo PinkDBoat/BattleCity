@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/background_move"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/background_btn_move"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="ContentDescription,RtlHardcoded"/>
+
+    <ImageButton
+        android:id="@+id/move"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/btn_move"
+        app:layout_constraintBottom_toBottomOf="@+id/background_move"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/background_move"
+        app:layout_constraintTop_toTopOf="@+id/background_move"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/background_move"/>
+
+    <ImageButton
+        android:id="@+id/fire"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/btn_fire"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="ContentDescription,RtlHardcoded"/>
+</android.support.constraint.ConstraintLayout>
