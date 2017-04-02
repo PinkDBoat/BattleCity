@@ -71,4 +71,7 @@ public class Server {
         }
     }
 
+    public boolean isRunning() {
+        return running;
+    }
 }

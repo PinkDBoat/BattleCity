@@ -19,6 +19,7 @@ import com.jay.battlecity.model.Location;
  */
 
 public class ControllerView extends FrameLayout {
+    private static final String TAG = "ControllerView";
     private ImageButton mFireBtn;
     private ImageButton mMoveBtn;
 
@@ -55,17 +56,17 @@ public class ControllerView extends FrameLayout {
         setControlListener(new ControlListener() {
             @Override
             public void fire() {
-                Log.v("tag", "fire");
+                Log.v(TAG, "fire");
             }
 
             @Override
             public void move() {
-                Log.v("tag", "move");
+                Log.v(TAG, "move");
             }
 
             @Override
             public void rotate(int angle) {
-                Log.v("tag", "angle:" + angle);
+                Log.v(TAG, "angle:" + angle);
             }
         });
     }
