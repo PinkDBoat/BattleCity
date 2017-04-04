@@ -13,6 +13,14 @@ public class Location implements Cloneable {
     //朝向，以x轴正向为0度，顺时针旋转为正方向，范围为[0-360)
     public int angle;
 
+    public int top() {
+        return cy - height / 2;
+    }
+
+    public int left() {
+        return cx - width / 2;
+    }
+
     @Override
     protected Location clone() throws CloneNotSupportedException {
         return (Location) super.clone();

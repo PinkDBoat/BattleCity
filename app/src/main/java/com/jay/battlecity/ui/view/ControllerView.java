@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.jay.battlecity.R;
 import com.jay.battlecity.model.Location;
+import com.jay.battlecity.utils.MathUtils;
 
 /**
  * 控制器view
@@ -27,6 +28,9 @@ public class ControllerView extends FrameLayout {
     //移动按钮的背景的位置（用于限制移动按钮的移动范围）
     private Location mMoveBackgroundLocation;
     private ControlListener mControlListener;
+
+    //是否处于移动事件
+    private boolean mMoving;
 
     public ControllerView(Context context) {
         super(context);
@@ -50,24 +54,7 @@ public class ControllerView extends FrameLayout {
         mMoveBackgroundLocation = new Location();
         getViewLocation(mMoveBtn, new Location[]{mMoveBtnLocation});
         getViewLocation(moveBackground, new Location[]{mMoveBackgroundLocation});
-        listenAction();
-        //测试
-        setControlListener(new ControlListener() {
-            @Override
-            public void fire() {
-                Log.v("tag", "fire");
-            }
-
-            @Override
-            public void move() {
-                Log.v("tag", "move");
-            }
-
-            @Override
-            public void rotate(int angle) {
-                Log.v("tag", "angle:" + angle);
-            }
-        });
+        registerListener();
     }
 
     private void getViewLocation(final View view, final Location[] locations) {
@@ -88,7 +75,7 @@ public class ControllerView extends FrameLayout {
         });
     }
 
-    private void listenAction() {
+    private void registerListener() {
         mFireBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,74 +93,82 @@ public class ControllerView extends FrameLayout {
                     int cy = mMoveBackgroundLocation.cy;
                     mMoveBtnLocation.cx = cx;
                     mMoveBtnLocation.cy = cy;
-                    mMoveBtn.setX(cx - mMoveBtnLocation.width / 2);
-                    mMoveBtn.setY(cy - mMoveBtnLocation.height / 2);
+                    mMoveBtn.setX(mMoveBtnLocation.left());
+                    mMoveBtn.setY(mMoveBtnLocation.top());
+                    if (mMoving) {
+                        mControlListener.stopMove();
+                        mMoving = false;
+                    }
                 } else if (action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_DOWN) {
                     int x = (int) event.getRawX();
                     int y = (int) event.getRawY();
-                    moveAndRotate(x, y);
+                    moveOrRotate(x, y);
                 }
                 return true;
             }
         });
+
+        //设置默认的监听器，减少null判断
+        setControlListener(new ControlListener() {
+            @Override
+            public void fire() {
+                Log.v("ControlListener", "fire");
+            }
+
+            @Override
+            public void move() {
+                Log.v("ControlListener", "move");
+            }
+
+            @Override
+            public void rotate(int angle) {
+                Log.v("ControlListener", "angle:" + angle);
+            }
+
+            @Override
+            public void stopMove() {
+                Log.v("ControlListener", "stop");
+            }
+        });
     }
 
-    private void moveAndRotate(int cx, int cy) {
+    private void moveOrRotate(int cx, int cy) {
         int status = locationWithMoveBackground(cx, cy);
-        int angle = calculateAngle(cx - mMoveBackgroundLocation.cx, cy - mMoveBackgroundLocation.cy);
-        if (status == -1) {
-            //位置修正
+        int angle = MathUtils.vectorDegree(cx - mMoveBackgroundLocation.cx, cy - mMoveBackgroundLocation.cy);
+        if (status == MathUtils.OUT) {
+            //将位置修正到圆上
             int r = mMoveBackgroundLocation.width / 2;
-            cx = (int) (r * Math.cos(Math.toRadians(angle)) + mMoveBackgroundLocation.cx);
-            cy = (int) (r * Math.sin(Math.toRadians(angle)) + mMoveBackgroundLocation.cy);
+            int ox = mMoveBackgroundLocation.cx;
+            int oy = mMoveBackgroundLocation.cy;
+            int[] point = MathUtils.polarToRectangularCoordinate(ox, oy, r, angle);
+            cx = point[0];
+            cy = point[1];
             status = 0;
         }
-        if (status == 0) {
-            mMoveBtn.setX(cx - mMoveBtnLocation.width / 2);
-            mMoveBtn.setY(cy - mMoveBtnLocation.height / 2);
+        if (status == MathUtils.ON) {
+            mMoveBtn.setX(mMoveBtnLocation.left());
+            mMoveBtn.setY(mMoveBtnLocation.top());
             if (angle != mMoveBtnLocation.angle) {
                 mControlListener.rotate(angle);
             }
-            mControlListener.move();
-        } else if (status == 1) {
-            mMoveBtn.setX(cx - mMoveBtnLocation.width / 2);
-            mMoveBtn.setY(cy - mMoveBtnLocation.height / 2);
-            mControlListener.rotate(angle);
+            if (!mMoving) {
+                mControlListener.move();
+                mMoving = true;
+            }
+        } else if (status == MathUtils.INNER) {
+            if (angle != mMoveBtnLocation.angle) {
+                mMoveBtn.setX(mMoveBtnLocation.left());
+                mMoveBtn.setY(mMoveBtnLocation.top());
+                mControlListener.rotate(angle);
+            }
+            if (mMoving) {
+                mMoving = false;
+                mControlListener.stopMove();
+            }
         }
         mMoveBtnLocation.angle = angle;
         mMoveBtnLocation.cx = cx;
         mMoveBtnLocation.cy = cy;
-    }
-
-    /**
-     * 计算轨迹球的当前角度
-     *
-     * @param dx 现在位置 - 中心位置
-     * @param dy 同上
-     * @return 在中心位置返回-1，在其他位置返回轨迹球当前的角度
-     */
-    private int calculateAngle(int dx, int dy) {
-        int angle;
-        if (dx == 0 && dy == 0) {
-            angle = -1;
-        } else if (dx == 0) {
-            angle = dy > 0 ? 90 : 270;
-        } else if (dy == 0) {
-            angle = dx > 0 ? 0 : 180;
-        } else if (dy > 0 && dx > 0) {
-            double degrees = Math.toDegrees(Math.atan(Math.abs(1.0 * dy / dx)));
-            angle = (int) Math.round(degrees);
-        } else if (dy > 0 && dx < 0) {
-            double degrees = Math.toDegrees(Math.atan(Math.abs(1.0 * dy / dx)));
-            angle = 180 - (int) Math.round(degrees);
-        } else if (dy < 0 && dx < 0) {
-            double degrees = Math.toDegrees(Math.atan(Math.abs(1.0 * dy / dx)));
-            angle = 180 + (int) Math.round(degrees);
-        } else {
-            double degrees = Math.toDegrees(Math.atan(Math.abs(1.0 * dy / dx)));
-            angle = 360 - (int) Math.round(degrees);
-        }
-        return angle;
     }
 
     /**
@@ -185,8 +180,7 @@ public class ControllerView extends FrameLayout {
         int x1 = mMoveBackgroundLocation.cx;
         int y1 = mMoveBackgroundLocation.cy;
         int r = mMoveBackgroundLocation.width / 2;
-        double distance = Math.pow(x - x1, 2) + Math.pow(y - y1, 2) - r * r;
-        return distance == 0 ? 0 : -(int) (distance / Math.abs(distance));
+        return MathUtils.circleAndPointLocation(x, y, x1, y1, r);
     }
 
     public void setControlListener(ControlListener controlListener) {
@@ -211,5 +205,10 @@ public class ControllerView extends FrameLayout {
          * @param angle 旋转到
          */
         void rotate(int angle);
+
+        /**
+         * 需要停止时调用
+         */
+        void stopMove();
     }
 }
