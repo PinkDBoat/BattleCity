@@ -9,6 +9,12 @@ public class MathUtils {
     public static final int ON = 0;
     public static final int OUT = -1;
 
+    private static int sPPI;
+
+    public static void init(int ppi) {
+        sPPI = ppi;
+    }
+
     /**
      * 矢量分解
      *
@@ -86,5 +92,12 @@ public class MathUtils {
         point[0] = (int) (p * Math.cos(Math.toRadians(degree)) + ox);
         point[1] = (int) (p * Math.sin(Math.toRadians(degree)) + oy);
         return point;
+    }
+
+    /**
+     * dp转px
+     */
+    public static int dp2px(int dp) {
+        return (int) Math.round(1.0 * dp * sPPI / 160);
     }
 }

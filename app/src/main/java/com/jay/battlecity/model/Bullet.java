@@ -7,11 +7,22 @@ import com.jay.battlecity.utils.MathUtils;
  */
 
 public class Bullet extends Entity {
-    public static final int LIVE_TIME = 1000;   //时间（单位：毫秒）
-    private final long mStartTime;
+    private static final int LIVE_TIME = 1000;   //时间（单位：毫秒）
+    private static final int RADIUS = 20;    //子弹半径(单位：dp)
 
-    public Bullet() {
-        mStartTime = System.currentTimeMillis();
+    private long mStartTime;
+
+    public Bullet(Location location) {
+        super(location);
+        location.width = MathUtils.dp2px(RADIUS);
+        location.height = MathUtils.dp2px(RADIUS);
+    }
+
+    @Override
+    public void setLiving(boolean living) {
+        super.setLiving(living);
+        if (living)
+            mStartTime = System.currentTimeMillis();
     }
 
     @Override

@@ -9,6 +9,10 @@ public abstract class Entity {
     private int mSpeed;
     private boolean mLiving;
 
+    public Entity(Location location) {
+        mLocation = location;
+    }
+
     public Location getLocation() {
         try {
             return mLocation.clone();
@@ -26,7 +30,7 @@ public abstract class Entity {
         return mLiving;
     }
 
-    public void setLocation(Location location) {
+    void setLocation(Location location) {
         mLocation = location;
     }
 
@@ -45,6 +49,7 @@ public abstract class Entity {
 
     /**
      * 旋转方法
+     *
      * @param dAngle 旋转的度数，顺时针为正，逆时针为负
      */
     public void rotate(int dAngle) {
