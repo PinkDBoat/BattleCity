@@ -18,11 +18,18 @@ public class Bullet extends Entity {
         location.height = MathUtils.dp2px(RADIUS);
     }
 
+    public void resetLocation(Location location) {
+        location.width = MathUtils.dp2px(RADIUS);
+        location.height = MathUtils.dp2px(RADIUS);
+        setLocation(location);
+    }
+
     @Override
     public void setLiving(boolean living) {
         super.setLiving(living);
-        if (living)
+        if (living) {
             mStartTime = System.currentTimeMillis();
+        }
     }
 
     @Override

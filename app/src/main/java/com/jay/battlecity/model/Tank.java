@@ -1,5 +1,6 @@
 package com.jay.battlecity.model;
 
+import com.jay.battlecity.utils.BulletManager;
 import com.jay.battlecity.utils.MathUtils;
 
 /**
@@ -8,6 +9,8 @@ import com.jay.battlecity.utils.MathUtils;
 
 public class Tank extends Entity {
     public static final int TOTAL_BULLET_OF_ONE_TANK = 3;
+    public static final int SUCCESS = 1;
+    public static final int FAIL = 0;
     //单位：dp
     private static final int WIDTH = 50;
     private static final int HEIGHT = 80;
@@ -20,8 +23,14 @@ public class Tank extends Entity {
         location.height = MathUtils.dp2px(HEIGHT);
     }
 
-    public void fire() {
-        // TODO: 2017/4/5 发射子弹
+
+    public int fire() {
+        if (mRestBullet != 0) {
+            BulletManager.getInstance().fire(getLocation());
+            --mRestBullet;
+            return SUCCESS;
+        }
+        return FAIL;
     }
 
     @Override
