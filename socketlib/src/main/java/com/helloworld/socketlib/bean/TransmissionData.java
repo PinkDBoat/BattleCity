@@ -7,6 +7,7 @@ import java.io.Serializable;
  * default TransmissionData
  */
 public class TransmissionData implements Serializable {
+    public byte type;
     public byte action;
     public long timestamp;
     public String username;
@@ -14,7 +15,8 @@ public class TransmissionData implements Serializable {
     public int y;
     public float d;
 
-    public TransmissionData(byte action, long timestamp, String username, int x, int y, float d) {
+    public TransmissionData(byte type, byte action, long timestamp, String username, int x, int y, float d) {
+        this.type = type;
         this.action = action;
         this.username = username;
         this.x = x;
@@ -29,6 +31,6 @@ public class TransmissionData implements Serializable {
 
     @Override
     public String toString() {
-        return username + "@" + timestamp + "-->" + action + "@(" + x + "," + y + "):" + d;
+        return type + "->" + username + "@" + timestamp + "-->" + action + "@(" + x + "," + y + "):" + d;
     }
 }
