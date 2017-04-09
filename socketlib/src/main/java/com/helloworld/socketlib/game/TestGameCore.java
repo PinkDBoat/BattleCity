@@ -1,6 +1,7 @@
 package com.helloworld.socketlib.game;
 
 import com.helloworld.socketlib.bean.Action;
+import com.helloworld.socketlib.bean.ItemType;
 import com.helloworld.socketlib.bean.StatusCode;
 import com.helloworld.socketlib.bean.TransmissionData;
 import com.helloworld.socketlib.server.ClientPool;
@@ -34,7 +35,7 @@ public class TestGameCore implements GameCore {
         Map<InetAddress, TransmissionData> data = new HashMap<>();
         long timestamp = System.currentTimeMillis();
         for (InetAddress inetAddress : ClientPool.getClientPool().keySet()) {
-            data.put(inetAddress, new TransmissionData(Action.MOVE, timestamp, "username", 1, 2, 3));
+            data.put(inetAddress, new TransmissionData(ItemType.TYPE_TANK, Action.MOVE, timestamp, "username", 1, 2, 3));
         }
         return data;
     }

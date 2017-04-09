@@ -26,7 +26,7 @@ public class StreamWrapper {
         return objectInputStream.readByte();
     }
 
-    public void sendAction(byte action) throws IOException {
+    public synchronized void sendAction(byte action) throws IOException {
         objectOutputStream.writeByte(action);
     }
 
@@ -34,7 +34,7 @@ public class StreamWrapper {
         return objectInputStream.readByte();
     }
 
-    public void sendStatus(byte status) throws IOException {
+    public synchronized void sendStatus(byte status) throws IOException {
         objectOutputStream.writeByte(status);
     }
 
@@ -42,11 +42,11 @@ public class StreamWrapper {
         return (TransmissionData) objectInputStream.readObject();
     }
 
-    public void sendData(TransmissionData data) throws IOException {
+    public synchronized void sendData(TransmissionData data) throws IOException {
         objectOutputStream.writeObject(data);
     }
 
-    public void sendSync(Map<InetAddress, TransmissionData> data) throws IOException {
+    public synchronized void sendSync(Map<InetAddress, TransmissionData> data) throws IOException {
         objectOutputStream.writeObject(data);
     }
 

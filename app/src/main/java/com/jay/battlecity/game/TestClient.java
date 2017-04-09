@@ -1,6 +1,7 @@
 package com.jay.battlecity.game;
 
 import com.helloworld.socketlib.bean.Action;
+import com.helloworld.socketlib.bean.ItemType;
 import com.helloworld.socketlib.bean.TransmissionData;
 import com.helloworld.socketlib.client.Client;
 
@@ -15,14 +16,14 @@ public class TestClient {
     private Client client;
     private String username;
 
-    public TestClient(Client client,String username) {
+    public TestClient(Client client, String username) {
         this.client = client;
         this.username = username;
     }
 
     public void test() throws IOException {
         client.send(Action.INIT);
-        client.send(new TransmissionData(Action.FIRE, System.currentTimeMillis(), username, 1, 2, 3));
-        client.send(new TransmissionData(Action.FIRE, System.currentTimeMillis(), username, 2, 3, 4));
+        client.send(new TransmissionData(ItemType.TYPE_TANK, Action.FIRE, System.currentTimeMillis(), username, 1, 2, 3));
+        client.send(new TransmissionData(ItemType.TYPE_TANK, Action.FIRE, System.currentTimeMillis(), username, 2, 3, 4));
     }
 }
