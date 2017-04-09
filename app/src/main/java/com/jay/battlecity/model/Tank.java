@@ -1,7 +1,6 @@
 package com.jay.battlecity.model;
 
-import com.jay.battlecity.utils.BulletManager;
-import com.jay.battlecity.utils.MathUtils;
+import com.jay.battlecity.utils.CalcUtils;
 
 /**
  * 坦克模型类
@@ -9,8 +8,7 @@ import com.jay.battlecity.utils.MathUtils;
 
 public class Tank extends Entity {
     public static final int TOTAL_BULLET_OF_ONE_TANK = 3;
-    public static final int SUCCESS = 1;
-    public static final int FAIL = 0;
+
     //单位：dp
     private static final int WIDTH = 50;
     private static final int HEIGHT = 80;
@@ -19,24 +17,19 @@ public class Tank extends Entity {
 
     public Tank(Location location) {
         super(location);
-        location.width = MathUtils.dp2px(WIDTH);
-        location.height = MathUtils.dp2px(HEIGHT);
+        location.width = CalcUtils.dp2px(WIDTH);
+        location.height = CalcUtils.dp2px(HEIGHT);
     }
 
 
-    public int fire() {
-        if (mRestBullet != 0) {
-            BulletManager.getInstance().fire(getLocation());
-            --mRestBullet;
-            return SUCCESS;
-        }
-        return FAIL;
+    public void fire() {
+        // TODO implement
     }
 
     @Override
     public void move() {
         Location location = getLocation();
-        int[] point = MathUtils.vectorDecomposition(getSpeed(), location.angle);
+        int[] point = CalcUtils.vectorDecomposition(getSpeed(), location.angle);
         location.cx += point[0];
         location.cy += point[1];
         setLocation(location);

@@ -2,7 +2,7 @@ package com.jay.battlecity;
 
 import android.app.Application;
 
-import com.jay.battlecity.utils.MathUtils;
+import com.jay.battlecity.utils.CalcUtils;
 
 
 public class App extends Application {
@@ -10,6 +10,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        MathUtils.init(getResources().getDisplayMetrics().densityDpi);
+        CalcUtils.init(getResources().getDisplayMetrics().densityDpi);
     }
 }

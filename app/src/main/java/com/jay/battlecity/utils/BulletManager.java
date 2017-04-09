@@ -23,7 +23,7 @@ public class BulletManager {
 
     private Location createLocationByTank(Location lctOfTank) {
         Location location = new Location();
-        int[] point = MathUtils.vectorDecomposition(lctOfTank.height / 2, lctOfTank.angle);
+        int[] point = CalcUtils.vectorDecomposition(lctOfTank.height / 2, lctOfTank.angle);
         location.cx = point[0];
         location.cy = point[1];
         location.angle = lctOfTank.angle;
@@ -36,7 +36,7 @@ public class BulletManager {
     }
 
     private void resetBullet(Bullet bullet, Location lctOfTank) {
-        bullet.resetLocation(createLocationByTank(lctOfTank));
+        bullet.show(createLocationByTank(lctOfTank));
         bullet.setLiving(true);
     }
 

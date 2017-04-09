@@ -1,6 +1,6 @@
 package com.jay.battlecity.model;
 
-import com.jay.battlecity.utils.MathUtils;
+import com.jay.battlecity.utils.CalcUtils;
 
 /**
  * 子弹模型类
@@ -14,14 +14,15 @@ public class Bullet extends Entity {
 
     public Bullet(Location location) {
         super(location);
-        location.width = MathUtils.dp2px(RADIUS);
-        location.height = MathUtils.dp2px(RADIUS);
+        location.width = CalcUtils.dp2px(RADIUS);
+        location.height = CalcUtils.dp2px(RADIUS);
     }
 
-    public void resetLocation(Location location) {
-        location.width = MathUtils.dp2px(RADIUS);
-        location.height = MathUtils.dp2px(RADIUS);
+    public void show(Location location) {
+        location.width = CalcUtils.dp2px(RADIUS);
+        location.height = CalcUtils.dp2px(RADIUS);
         setLocation(location);
+        setLiving(true);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Bullet extends Entity {
         }
 
         Location location = getLocation();
-        int[] point = MathUtils.vectorDecomposition(getSpeed(), location.angle);
+        int[] point = CalcUtils.vectorDecomposition(getSpeed(), location.angle);
         location.cx += point[0];
         location.cy += point[1];
         setLocation(location);

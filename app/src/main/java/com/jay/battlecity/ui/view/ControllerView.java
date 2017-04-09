@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.jay.battlecity.R;
 import com.jay.battlecity.model.Location;
-import com.jay.battlecity.utils.MathUtils;
+import com.jay.battlecity.utils.CalcUtils;
 
 /**
  * 控制器view
@@ -134,18 +134,18 @@ public class ControllerView extends FrameLayout {
 
     private void moveOrRotate(int cx, int cy) {
         int status = locationWithMoveBackground(cx, cy);
-        int angle = MathUtils.vectorDegree(cx - mMoveBackgroundLocation.cx, cy - mMoveBackgroundLocation.cy);
-        if (status == MathUtils.OUT) {
+        int angle = CalcUtils.vectorDegree(cx - mMoveBackgroundLocation.cx, cy - mMoveBackgroundLocation.cy);
+        if (status == CalcUtils.OUT) {
             //将位置修正到圆上
             int r = mMoveBackgroundLocation.width / 2;
             int ox = mMoveBackgroundLocation.cx;
             int oy = mMoveBackgroundLocation.cy;
-            int[] point = MathUtils.polarToRectangularCoordinate(ox, oy, r, angle);
+            int[] point = CalcUtils.polarToRectangularCoordinate(ox, oy, r, angle);
             cx = point[0];
             cy = point[1];
             status = 0;
         }
-        if (status == MathUtils.ON) {
+        if (status == CalcUtils.ON) {
             mMoveBtn.setX(mMoveBtnLocation.left());
             mMoveBtn.setY(mMoveBtnLocation.top());
             if (angle != mMoveBtnLocation.angle) {
@@ -155,7 +155,7 @@ public class ControllerView extends FrameLayout {
                 mControlListener.move();
                 mMoving = true;
             }
-        } else if (status == MathUtils.INNER) {
+        } else if (status == CalcUtils.INNER) {
             if (angle != mMoveBtnLocation.angle) {
                 mMoveBtn.setX(mMoveBtnLocation.left());
                 mMoveBtn.setY(mMoveBtnLocation.top());
@@ -180,7 +180,7 @@ public class ControllerView extends FrameLayout {
         int x1 = mMoveBackgroundLocation.cx;
         int y1 = mMoveBackgroundLocation.cy;
         int r = mMoveBackgroundLocation.width / 2;
-        return MathUtils.circleAndPointLocation(x, y, x1, y1, r);
+        return CalcUtils.circleAndPointLocation(x, y, x1, y1, r);
     }
 
     public void setControlListener(ControlListener controlListener) {
