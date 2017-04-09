@@ -8,17 +8,62 @@
     tools:context="com.jay.battlecity.ui.activities.MainActivity">
 
     <com.jay.battlecity.ui.view.CircleImageView
+        android:id="@+id/avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:scaleType="centerCrop"
-        app:circle_color="#f44336"
+        app:circle_color="#F44336"
         app:circle_size="2dp"
-        app:srcCompat="@drawable/avatar_default"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avatar_default"
+        tools:ignore="RtlHardcoded"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"/>
+
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"/>
+        android:text="木子丨Jay"
+        android:textColor="#F44336"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:ignore="RtlHardcoded"/>
+
+    <ImageView
+        android:id="@+id/rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/ic_qt"
+        app:layout_constraintBottom_toBottomOf="@+id/nickname"
+        app:layout_constraintLeft_toRightOf="@+id/nickname"
+        app:layout_constraintTop_toTopOf="@+id/nickname"
+        app:layout_constraintVertical_bias="0.384"
+        tools:ignore="ContentDescription,RtlHardcoded"/>
+
+    <RatingBar
+        android:id="@+id/star"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:numStars="3"
+        android:padding="2dp"
+        android:paddingBottom="20dp"
+        android:rating="1.5"
+        android:stepSize="0.5"
+        app:layout_constraintLeft_toLeftOf="@+id/nickname"
+        app:layout_constraintTop_toBottomOf="@+id/nickname"
+        tools:ignore="RtlHardcoded"/>
 
 </android.support.constraint.ConstraintLayout>

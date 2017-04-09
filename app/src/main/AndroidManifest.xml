@@ -18,13 +18,17 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <service
             android:name=".service.GameService"
-            android:process=":server"
-            />
+            android:process=":server"/>
+
+        <activity android:name=".ui.activities.GameActivity">
+        </activity>
     </application>
+
 </manifest>
