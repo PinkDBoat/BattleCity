@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jay.battlecity.ui.MainActivity">
+    tools:context="com.jay.battlecity.ui.activities.MainActivity">
 
-    <com.jay.battlecity.ui.view.ControllerView
-        android:id="@+id/controller"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="end|bottom"/>
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
