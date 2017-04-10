@@ -21,7 +21,6 @@ public class Tank extends Entity {
         location.height = CalcUtils.dp2px(HEIGHT);
     }
 
-
     public void fire() {
         // TODO implement
     }
