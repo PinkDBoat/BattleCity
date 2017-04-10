@@ -1,5 +1,7 @@
 package com.jay.battlecity.utils;
 
+import android.content.Context;
+
 /**
  * 数学计算工具类
  */
@@ -99,5 +101,13 @@ public class CalcUtils {
      */
     public static int dp2px(int dp) {
         return (int) Math.round(1.0 * dp * sPPI / 160);
+    }
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static int px2dp(Context context, float px) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (px / scale + 0.5f);
     }
 }
