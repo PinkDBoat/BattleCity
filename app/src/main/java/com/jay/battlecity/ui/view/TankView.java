@@ -50,7 +50,7 @@ public class TankView extends View  {
     }
 
     /*
-    * 三个基本方法 设置起始XY（默认为0,0），设置方向(默认为0)，设置坦克样式（默认为tank_white）
+    * 三个基本方法 设置起始XY（默认为0,0），设置方向(默认为朝向0°)，设置坦克样式（默认为tank_white）
      */
     public void setStartXY(int X, int Y){
         this.viewX = X;
@@ -86,7 +86,6 @@ public class TankView extends View  {
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-
         switch (event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
