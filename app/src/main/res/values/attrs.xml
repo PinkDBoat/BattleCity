@@ -4,4 +4,11 @@
         <attr name="circle_color" format="color"/>
         <attr name="circle_size" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="MenuButton">
+        <attr name="btn_background" format="color"/>
+        <attr name="btn_icon" format="integer"/>
+        <attr name="menu_main" format="integer"/>
+        <attr name="menu_secondary" format="integer"/>
+    </declare-styleable>
 </resources>

@@ -46,9 +46,9 @@ public class ControllerView extends FrameLayout {
     }
 
     private void init(Context context) {
-        View container = LayoutInflater.from(context).inflate(R.layout.view_controller, this, true);
-        ImageView moveBackground = (ImageView) container.findViewById(R.id.background_move);
-        mFireBtn = (ImageButton) container.findViewById(R.id.fire);
+        LayoutInflater.from(context).inflate(R.layout.view_controller, this, true);
+        ImageView moveBackground = (ImageView) findViewById(R.id.background_move);
+        mFireBtn = (ImageButton) findViewById(R.id.fire);
         mMoveBtn = (ImageButton) findViewById(R.id.move);
         mMoveBtnLocation = new Location();
         mMoveBackgroundLocation = new Location();
